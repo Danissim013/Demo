@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/v1/001-create-account-table.yaml
+  - include:
+      file: db/changelog/v1/002-add-account-indexes.yaml
+  - include:
+      file: db/changelog/v1/003-add-audit-columns.yaml
+  - include:
+      file: db/changelog/v1/004-add-account-limit-constraint.yaml
+  - include:
+      file: db/changelog/v1/005-add-account-tags-table.yaml

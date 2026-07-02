@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-add-account-limit-constraint
+      author: isp-21-student
+      changes:
+        - sql:
+            dbms: h2
+            sql: ALTER TABLE accounts ADD CONSTRAINT chk_account_currency CHECK (currency IN ('RUB', 'USD', 'EUR', 'GBP', 'CNY'))
+      rollback:
+        - sql:
+            dbms: h2
+            sql: ALTER TABLE accounts DROP CONSTRAINT chk_account_currency

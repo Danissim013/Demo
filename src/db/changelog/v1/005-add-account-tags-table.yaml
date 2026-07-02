@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 005-add-account-tags-table
+      author: isp-21-student
+      preconditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: account_tag
+      changes:
+        - createTable:
+            tableName: account_tag
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: account_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_tag_account
+                    referencedTableName: accounts
+                    referencedColumnNames: id
+                    deleteCascade: true
+              - column:
+                  name: tag
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: account_tag
+            columnNames: account_id, tag
+            constraintName: uq_account_tag
+      rollback:
+        - dropTable:
+            tableName: account_tag

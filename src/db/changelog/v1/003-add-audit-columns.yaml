@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-add-audit-columns
+      author: isp-21-student
+      changes:
+        - addColumn:
+            tableName: accounts
+            columns:
+              - column:
+                  name: closed_at
+                  type: timestamp
+              - column:
+                  name: close_reason
+                  type: varchar(255)
+        - sql:
+            dbms: h2
+            sql: ALTER TABLE accounts ADD CONSTRAINT chk_account_closure CHECK (closed_at IS NULL OR status = 'CLOSED')
+      rollback:
+        - dropAllForeignKeyConstraints: # Для отката кастомного sql
+            tableName: accounts
+        - dropColumn:
+            tableName: accounts
+            columnName: closed_at
+        - dropColumn:
+            tableName: accounts
+            columnName: close_reason
